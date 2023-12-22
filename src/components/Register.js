@@ -31,7 +31,7 @@ class Register extends React.Component {
 
 	//arrow function for clarity of this keyword
 	onSubmitRegister = () => {
-		fetch("http://localhost:3000/register", {
+		fetch("https://input-hours-server.onrender.com/register", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"

@@ -55,7 +55,7 @@ class App extends Component {
   }
 
   onInputClick = () => {
-    fetch("http://localhost:3000/input", {
+    fetch("https://input-hours-server.onrender.com/input", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json" 
