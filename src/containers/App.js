@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Navigation from '../components/Navigation';
-import Logger from '../components/Logger';
-import Accum from '../components/Accum';
-import SignIn from '../components/Signin';
-import Register from '../components/Register';
+import SignIn from "../components/welcome/Signin";
+import Register from "../components/welcome/Register";
+import Stats from "../components/content/Stats";
+import Welcome from "../components/Welcome";
+import Content from "../components/Content";
 
 
 class App extends Component {
@@ -12,7 +13,7 @@ class App extends Component {
     super();
     this.state = {
       isSignedIn: false,
-      route: "signin",
+      route: "signin", //signin, signout
       inputMins: 0,
       user: {
         id: "",
@@ -40,9 +41,10 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
+    console.log(route);
     if (route === 'signout') {
       this.setState({isSignedIn : false})
-    } else if (route === "home") {
+    } else if (route === "signin") {
       this.setState({isSignedIn: true})
     }
     this.setState({route: route})
@@ -75,21 +77,14 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, route } = this.state; 
+    const { isSignedIn, route, user} = this.state;
+    const { name, todayMins } = user;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
         { 
           route === "home" ?
-          (
-            <div>
-              <Accum 
-                name={this.state.user.name} 
-                todayMins={this.state.user.todayMins}
-              />
-              <Logger onInputChange={this.onInputChange} onInputClick={this.onInputClick}/>
-            </div>  
-          )
+          <Stats name={name} todayMins={todayMins} onInputChange={this.onInputChange} onInputClick={this.onInputClick}/>
           : route === "signin" ? 
           ( <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> ) 
           : ( <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> )
@@ -100,6 +95,11 @@ class App extends Component {
 }
 
 export default App;
+
+
+
+
+
 
 
 /*
