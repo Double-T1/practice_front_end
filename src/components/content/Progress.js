@@ -2,7 +2,7 @@ import React from "react";
 import Accum from "./Accum";
 import Logger from "./Logger"
 
-const Stats = ({name, todayMins, onInputChange, onInputClick}) => {
+const Progress = ({name, todayMins, onInputChange, onInputClick}) => {
 	return (
 		<div>
 			<Accum 
@@ -16,4 +16,4 @@ const Stats = ({name, todayMins, onInputChange, onInputClick}) => {
 
 
 
-export default Stats;
+export default Progress;

@@ -4,20 +4,20 @@ const Navigation = ({ isSignedIn, onRouteChange }) => {
 	if (isSignedIn) {
 		return (
 			<nav style={{display: 'flex', justifyContent: 'flex-end'}} className="bb bw1">
+				<p id="progress" 
+					className="pa3" 
+					onClick={() => onRouteChange("progress")}>
+					Progress
+				</p>
 				<p id="profile" 
 					className="pa3" 
-					onClick={() => onRouteChange("signout")}>
-					Profile (not functioning yet)
+					onClick={() => onRouteChange("profile")}>
+					Profile
 				</p>
 				<p id="signout" 
 					className="pa3" 
-					onClick={() => onRouteChange("signout")}>
+					onClick={() => onRouteChange("home")}>
 					Sign Out
-				</p>
-				<p id="delete" 
-					className="pa3" 
-					onClick={() => onRouteChange("signout")}>
-					Delete Account (not functioning yet)
 				</p>
 			</nav>
 		)
@@ -27,7 +27,7 @@ const Navigation = ({ isSignedIn, onRouteChange }) => {
 				<p id="signIn" 
 					className="pa3" 
 					onClick={() => onRouteChange("home")}>
-					Home (not functioning yet)
+					Home
 				</p>
 				<p id="signIn" 
 					className="pa3" 
