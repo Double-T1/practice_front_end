@@ -45,7 +45,6 @@ class Register extends React.Component {
 		})
 		.then(res => res.json())
 		.then(user => {
-			console.log(user);
 			if (user) {
 				this.props.loadUser(user);
 				this.props.onRouteChange("progress");

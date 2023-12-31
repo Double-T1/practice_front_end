@@ -23,11 +23,3 @@ class Welcome extends React.Component {
 
 
 export default Welcome;
-
-// route === "signin" ? 
-//           ( <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> ) 
-//           : ( 
-//             route === "register" ? 
-//             ( <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> )
-//             : ( <Home /> )
-//             )
