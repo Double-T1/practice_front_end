@@ -31,6 +31,7 @@ class Register extends React.Component {
 
 	//arrow function for clarity of this keyword
 	onSubmitRegister = () => {
+		console.log(this.props);
 		fetch("https://input-hours-server.onrender.com/register", {
 			method: "POST",
 			headers: {
@@ -44,9 +45,10 @@ class Register extends React.Component {
 		})
 		.then(res => res.json())
 		.then(user => {
+			console.log(user);
 			if (user) {
 				this.props.loadUser(user);
-				this.props.onRouteChange("home");
+				this.props.onRouteChange("progress");
 			}
 		})
 	}

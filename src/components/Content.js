@@ -1,25 +1,19 @@
 import React from "react";
+import Progress from "./content/Progress";
+import Profile from "./content/Profile";
 
 
 class Content extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			route: "stats" //stats, profile, signout??
-		}
 	}
 
-	onRouteChange = (route) => {
-		this.setState({route: route});
-		if (route === "signout") {
-			this.onNavChange(true);
-		} 
-	 }
-
 	render() {
+		const {route, name, todayMins, onInputChange, onInputClick} = this.props;
 		return (
-			<div></div>
-			// <Stats name={name} todayMins={todayMins} onInputChange={this.onInputChange} onInputClick={this.onInputClick}/>
+			route === "progress" ? 
+			( <Progress name={name} todayMins={todayMins} onInputChange={onInputChange} onInputClick={onInputClick}/> ) :
+			( <Profile /> )		
 		)
 	}
 }

@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import Navigation from '../components/Navigation';
-import SignIn from "../components/welcome/Signin";
-import Register from "../components/welcome/Register";
 import Progress from "../components/content/Progress";
 import Welcome from "../components/Welcome";
 import Content from "../components/Content";
-import Home from "../components/welcome/Home"
 
 
 class App extends Component {
@@ -14,7 +11,7 @@ class App extends Component {
     super();
     this.state = {
       isSignedIn: false,
-      route: "home", //home, signin, register, 
+      route: "home", //home, signin, register, progress, profile
       inputMins: 0,
       user: {
         id: "",
@@ -84,14 +81,8 @@ class App extends Component {
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
         { 
           isSignedIn ?
-          <Progress name={name} todayMins={todayMins} onInputChange={this.onInputChange} onInputClick={this.onInputClick}/>
-          : route === "signin" ? 
-          ( <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> ) 
-          : ( 
-            route === "register" ? 
-            ( <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> )
-            : ( <Home /> )
-            )
+          ( <Content route={route} name={name} todayMins={todayMins} onInputChange={this.onInputChange} onInputClick={this.onInputClick}/> ) : 
+          ( <Welcome route={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> )
         }
       </div>
     )
@@ -110,7 +101,7 @@ export default App;
 Navigation => register, signin
 Intro Page => before signin
 
-home, signin, register, signout, progress, profile/settings
+home, signin, register, signout, progress, profile
 
 
 */
