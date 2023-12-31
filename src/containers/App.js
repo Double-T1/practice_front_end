@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Navigation from '../components/Navigation';
-import Progress from "../components/content/Progress";
-import Welcome from "../components/Welcome";
-import Content from "../components/Content";
+import Navigation from '../components/navigation/Navigation';
+import Welcome from "../components/welcome/Welcome";
+import Content from "../components/content/Content";
 
 
 class App extends Component {
@@ -75,13 +74,16 @@ class App extends Component {
 
   render() {
     const { isSignedIn, route, user} = this.state;
-    const { name, todayMins } = user;
+    const { name, todayMins, id } = user;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
         { 
           isSignedIn ?
-          ( <Content route={route} name={name} todayMins={todayMins} onInputChange={this.onInputChange} onInputClick={this.onInputClick}/> ) : 
+          ( <Content route={route} name={name} todayMins={todayMins} 
+            onInputChange={this.onInputChange} onInputClick={this.onInputClick} 
+            onRouteChange={this.onRouteChange} id={id}/> 
+          ) : 
           ( <Welcome route={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> )
         }
       </div>

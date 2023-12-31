@@ -1,11 +1,46 @@
 import React from "react";
 
-const Profile = () => {
-	return (
-		<div>
-			<h1>This is the page that shows the setting and delete account option</h1>
-		</div>
-	)
+class Profile extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	onSubmitDelete = () => {
+		fetch(`https://input-hours-server.onrender.com/delete/${this.props.id}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			}
+		})
+		.then(res => res.json())
+		.then(name => {
+			console.log(`${name.name}, you're deleted`);
+			this.props.onRouteChange("home");
+		})
+	}
+
+	render() {
+		return (
+			<div>
+				<div> 
+					<h1>This page shows the setting and delete account option</h1>
+				</div>
+				<div>
+					<p>User name: </p>
+					<p>Email: </p>
+					<p>change password?</p>
+				</div>
+				<div className="">
+					<input
+						onClick={this.onSubmitDelete}
+						className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+						type="submit"
+						value="Delete Account"
+					/>
+	            </div>
+			</div>
+		)
+	}
 }
 
 

@@ -1,7 +1,7 @@
 import React from "react";
-import Home from "./welcome/Home";
-import Signin from "./welcome/Signin";
-import Register from "./welcome/Register";
+import Home from "./Home";
+import Signin from "./Signin";
+import Register from "./Register";
 
 
 class Welcome extends React.Component {

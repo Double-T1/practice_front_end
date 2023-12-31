@@ -31,7 +31,6 @@ class Register extends React.Component {
 
 	//arrow function for clarity of this keyword
 	onSubmitRegister = () => {
-		console.log(this.props);
 		fetch("https://input-hours-server.onrender.com/register", {
 			method: "POST",
 			headers: {
