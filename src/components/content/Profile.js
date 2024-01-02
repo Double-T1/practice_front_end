@@ -14,20 +14,21 @@ class Profile extends React.Component {
 		})
 		.then(res => res.json())
 		.then(name => {
-			console.log(`${name.name}, you're deleted`);
+			//console.log(`${name.name}, you're deleted`);
 			this.props.onRouteChange("home");
 		})
 	}
 
 	render() {
+		const {name, email} = this.props;
 		return (
 			<div>
 				<div> 
 					<h1>This page shows the setting and delete account option</h1>
 				</div>
 				<div>
-					<p>User name: </p>
-					<p>Email: </p>
+					<p>{`User name: ${name}`}</p>
+					<p>{`Email: ${email}`}</p>
 					<p>change password?</p>
 				</div>
 				<div className="">

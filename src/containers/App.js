@@ -9,8 +9,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      isSignedIn: false,
-      route: "home", //home, signin, register, progress, profile
+      isSignedIn: true,
+      route: "profile", //home, signin, register, progress, profile
       inputMins: 0,
       user: {
         id: "",
@@ -73,8 +73,8 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, route, user} = this.state;
-    const { name, todayMins, id } = user;
+    const { isSignedIn, route, user } = this.state;
+    const { name, todayMins, email, id } = user;
     return (
       <div className="App">
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
@@ -82,9 +82,10 @@ class App extends Component {
           isSignedIn ?
           ( <Content route={route} name={name} todayMins={todayMins} 
             onInputChange={this.onInputChange} onInputClick={this.onInputClick} 
-            onRouteChange={this.onRouteChange} id={id}/> 
+            onRouteChange={this.onRouteChange} id={id} email={email}/> 
           ) : 
-          ( <Welcome route={route} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/> )
+          ( <Welcome route={route} loadUser={this.loadUser} 
+            onRouteChange={this.onRouteChange}/> )
         }
       </div>
     )

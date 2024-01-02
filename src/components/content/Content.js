@@ -9,13 +9,15 @@ class Content extends React.Component {
 	}
 
 	render() {
-		const {route, name, todayMins, onInputChange, onInputClick, onRouteChange, id} = this.props;
+		const {route, name, todayMins, onInputChange, onInputClick, 
+			onRouteChange, id, email} = this.props;
 		return (
 			route === "progress" ? 
 			( <Progress name={name} todayMins={todayMins} 
 				onInputChange={onInputChange} onInputClick={onInputClick}/> 
 			) :
-			( <Profile onRouteChange={onRouteChange} id={id}/> )		
+			( <Profile name={name} email={email}
+				onRouteChange={onRouteChange} id={id}/> )		
 		)
 	}
 }
