@@ -29,7 +29,10 @@ class Profile extends React.Component {
 				<div>
 					<p>{`User name: ${name}`}</p>
 					<p>{`Email: ${email}`}</p>
-					<p>change password?</p>
+					<div className="pb3">
+						{/*how much does type and value attribute matter here?*/}
+						<button type="button" value="change password">change password?</button>
+					</div>
 				</div>
 				<div className="">
 					<input
