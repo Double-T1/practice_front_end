@@ -9,8 +9,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      isSignedIn: true,
-      route: "profile", //home, signin, register, progress, profile
+      isSignedIn: false,
+      route: "home", //home, signin, register, progress, profile
       inputMins: 0,
       user: {
         id: "",
@@ -82,7 +82,8 @@ class App extends Component {
           isSignedIn ?
           ( <Content route={route} name={name} todayMins={todayMins} 
             onInputChange={this.onInputChange} onInputClick={this.onInputClick} 
-            onRouteChange={this.onRouteChange} id={id} email={email}/> 
+            onRouteChange={this.onRouteChange} id={id} email={email}
+            loadUser={this.loadUser}/> 
           ) : 
           ( <Welcome route={route} loadUser={this.loadUser} 
             onRouteChange={this.onRouteChange}/> )
