@@ -1,6 +1,6 @@
 import React from "react";
-import Accum from "./progress/Accum";
-import Logger from "./progress/Logger"
+import Accum from "./Accum";
+import Logger from "./Logger"
 
 const Progress = ({name, todayMins, onInputChange, onInputClick}) => {
 	return (

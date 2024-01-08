@@ -9,9 +9,14 @@ class ChangePassword extends React.Component {
 		}
 	}
 
-	// onInputChange = (field, event) => {
-
-	// }
+	onInputChange = (target) => {
+		const onChange = (event) => {
+			this.setState({
+				[target]: event.target.value 
+			})
+		}
+		return onChange;
+	}
 
 	onCurrentPasswordChange = (event) => {
 		this.setState({

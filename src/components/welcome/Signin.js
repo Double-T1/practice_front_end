@@ -9,16 +9,13 @@ class SignIn extends React.Component {
 		}
 	}
 
-	onEmailChange = (event) => {
-		this.setState({
-			email: event.target.value
-		})
-	}
-
-	onPasswordChange = (event) => {
-		this.setState({
-			password: event.target.value
-		})
+	onInputChange = (target) => {
+		const onChange = (event) => {
+			this.setState({
+				[target]: event.target.value 
+			})
+		}
+		return onChange;
 	}
 
 	//arrow function for clarity of this keyword
@@ -53,7 +50,7 @@ class SignIn extends React.Component {
 							id="inputEmail"
 							type="text"
 							name="email"
-							onChange={this.onEmailChange}
+							onChange={this.onInputChange("email")}
 						/>
 					</div>
 					<div id="password">
@@ -62,7 +59,7 @@ class SignIn extends React.Component {
 							id="inputPassword"
 							type="text"
 							name="password"
-							onChange={this.onPasswordChange}
+							onChange={this.onInputChange("password")}
 						/>
 					</div>
 				</fieldset>
