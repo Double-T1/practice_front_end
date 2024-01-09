@@ -1,11 +1,11 @@
 import React from "react";
 import './Alert.css';
 
-const Alert = ({ alertMessage }) => {
+const Alert = ({ message, isSuccessful }) => {
 	return (
-		<div className="alert">
+		<div className={ !isSuccessful ? ("alert") : ("success") } >
 			<h3>
-				{ alertMessage }
+				{ `${message}` }
 			</h3>
 		</div>
 	)
