@@ -23,6 +23,14 @@ const NoChange = ({name, email, onChangeRoute}) => {
 				type="submit"
 				value="Change Password"
 			/>
+			<div className="pa3">
+				<input
+					onClick={() => onChangeRoute("deleteAccount")}
+					className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+					type="submit"
+					value="Delete Account"
+				/>
+	        </div>
 		</div>
 	)
 }

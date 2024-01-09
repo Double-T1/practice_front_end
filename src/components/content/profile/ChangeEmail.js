@@ -26,6 +26,7 @@ class ChangeEmail extends React.Component {
 	}
 
 	onChangeEmailSubmit = () => {
+		this.props.setLoading(true);
 		fetch("https://input-hours-server.onrender.com/profile/update/changeEmail", {
 			method: "PUT",
 			headers: {
@@ -40,6 +41,7 @@ class ChangeEmail extends React.Component {
 			return res.json();
 		})
 		.then(user => {
+			this.props.setLoading(false);
 			if (user.id) {
 				this.props.loadUser(user);
 				this.props.onChangeRoute("default");

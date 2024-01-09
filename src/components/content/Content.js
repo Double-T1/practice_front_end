@@ -10,7 +10,7 @@ class Content extends React.Component {
 
 	render() {
 		const {route, name, todayMins, onInputChange, onInputClick, 
-			onRouteChange, id, email, loadUser} = this.props;
+			onRouteChange, id, email, loadUser, setLoading} = this.props;
 		return (
 			route === "progress" ? 
 			( <Progress name={name} todayMins={todayMins} 
@@ -18,7 +18,7 @@ class Content extends React.Component {
 			) :
 			( <Profile name={name} email={email}
 				onRouteChange={onRouteChange} id={id}
-				loadUser={loadUser} /> )		
+				loadUser={loadUser} setLoading={setLoading}/> )		
 		)
 	}
 }

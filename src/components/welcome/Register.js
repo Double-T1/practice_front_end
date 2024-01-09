@@ -1,7 +1,6 @@
 import React from 'react';
 
 class Register extends React.Component {
-	//why pass props here ???
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -22,6 +21,7 @@ class Register extends React.Component {
 
 	//arrow function for clarity of this keyword
 	onSubmitRegister = () => {
+		this.props.setLoading(true);
 		fetch("https://input-hours-server.onrender.com/register", {
 			method: "POST",
 			headers: {
@@ -35,6 +35,7 @@ class Register extends React.Component {
 		})
 		.then(res => res.json())
 		.then(user => {
+			this.props.setLoading(false);
 			if (user.id) {
 				this.props.showAlert("Registered succesfully! You can now sign in to start your journey.",true);
 				this.props.onRouteChange("signin");

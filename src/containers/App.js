@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, componentDidMount, componentWillUnmount } from 'react';
 import './App.css';
 import Navigation from '../components/navigation/Navigation';
 import Welcome from "../components/welcome/Welcome";
@@ -21,9 +21,10 @@ class App extends Component {
         // totalDays: 0,
         // streaks: 0,
         joined: '' //date  
-      }
+      },
+      isLoading: false
     };
-  }
+  };
 
   loadUser = (currentUser) => {
     this.setState({
@@ -35,6 +36,7 @@ class App extends Component {
         joined: currentUser.joined
       }
     })
+    localStorage.setItem("user",JSON.stringify(currentUser));
   }
 
   onRouteChange = (route) => {
@@ -46,13 +48,28 @@ class App extends Component {
     this.setState({route: route})
   }
 
+  componentDidMount() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      this.loadUser(user);
+      this.onRouteChange("progress");
+    }
+  }
+
   onInputChange = (event) => {
     this.setState({
       inputMins: event.target.value
     })
   }
 
+  setLoading = (status) => {
+    this.setState({
+      isLoading: status
+    })
+  }
+
   onInputClick = () => {
+    this.setLoading(true);
     fetch("https://input-hours-server.onrender.com/input", {
       method: "PUT",
       headers: {
@@ -65,6 +82,7 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(mins => {
+      this.setLoading(false);
       this.setState(
         Object.assign(this.state.user,{todayMins: mins})
       )
@@ -73,20 +91,28 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, route, user } = this.state;
+    const { isSignedIn, route, user, isLoading } = this.state;
     const { name, todayMins, email, id } = user;
     return (
       <div className="App">
+        {
+          isLoading && 
+          ( 
+            <div className="loader-container">
+              <div className="spinner"></div>
+            </div> 
+          )
+        }
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
         { 
           isSignedIn ?
           ( <Content route={route} name={name} todayMins={todayMins} 
             onInputChange={this.onInputChange} onInputClick={this.onInputClick} 
             onRouteChange={this.onRouteChange} id={id} email={email}
-            loadUser={this.loadUser}/> 
+            loadUser={this.loadUser} setLoading={this.setLoading}/> 
           ) : 
           ( <Welcome route={route} loadUser={this.loadUser} 
-            onRouteChange={this.onRouteChange}/> )
+            onRouteChange={this.onRouteChange} setLoading={this.setLoading}/> )
         }
       </div>
     )
