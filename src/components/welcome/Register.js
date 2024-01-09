@@ -11,22 +11,13 @@ class Register extends React.Component {
 		}
 	}
 
-	onNameChange = (event) => {
-		this.setState({
-			name: event.target.value
-		})
-	}
-
-	onEmailChange = (event) => {
-		this.setState({
-			email: event.target.value
-		})
-	}
-
-	onPasswordChange = (event) => {
-		this.setState({
-			password: event.target.value
-		})
+	onInputChange = (target) => {
+		const onChange = (event) => {
+			this.setState({
+				[target]: event.target.value 
+			})
+		}
+		return onChange;
 	}
 
 	//arrow function for clarity of this keyword
@@ -44,9 +35,11 @@ class Register extends React.Component {
 		})
 		.then(res => res.json())
 		.then(user => {
-			if (user) {
+			if (user.id) {
 				this.props.loadUser(user);
 				this.props.onRouteChange("progress");
+			} else {
+				this.props.showAlert(user);
 			}
 		})
 	}
@@ -62,7 +55,7 @@ class Register extends React.Component {
 							id="inputName"
 							type="text"
 							name="name"
-							onChange={this.onNameChange}
+							onChange={this.onInputChange("name")}
 						/>
 					</div>
 					<div id="email"> 
@@ -71,7 +64,7 @@ class Register extends React.Component {
 							id="inputEmail"
 							type="text"
 							name="email"
-							onChange={this.onEmailChange}
+							onChange={this.onInputChange("email")}
 						/>
 					</div>
 					<div id="password">
@@ -80,7 +73,7 @@ class Register extends React.Component {
 							id="inputPassword"
 							type="text"
 							name="password"
-							onChange={this.onPasswordChange}
+							onChange={this.onInputChange("password")}
 						/>
 					</div>
 				</fieldset>

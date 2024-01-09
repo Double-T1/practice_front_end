@@ -20,7 +20,7 @@ class App extends Component {
         // totalMins: 0,
         // totalDays: 0,
         // streaks: 0,
-        joinedDate: '' //date  
+        joined: '' //date  
       }
     };
   }

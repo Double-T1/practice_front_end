@@ -9,19 +9,16 @@ class SignIn extends React.Component {
 		}
 	}
 
-	onEmailChange = (event) => {
-		this.setState({
-			email: event.target.value
-		})
+	onInputChange = (target) => {
+		const onChange = (event) => {
+			this.setState({
+				[target]: event.target.value 
+			})
+		}
+		return onChange;
 	}
 
-	onPasswordChange = (event) => {
-		this.setState({
-			password: event.target.value
-		})
-	}
-
-	//arrow function for clarity of this keyword
+	//arrow function for the scope of 'this' keyword
 	onSubmitSignIn = () => {
 		fetch("https://input-hours-server.onrender.com/signin", {
 			method: "POST",
@@ -38,6 +35,8 @@ class SignIn extends React.Component {
 			if (user.id) {
 				this.props.loadUser(user);
 				this.props.onRouteChange("progress");
+			} else {
+				this.props.showAlert(user);
 			}
 		})
 	}
@@ -53,7 +52,7 @@ class SignIn extends React.Component {
 							id="inputEmail"
 							type="text"
 							name="email"
-							onChange={this.onEmailChange}
+							onChange={this.onInputChange("email")}
 						/>
 					</div>
 					<div id="password">
@@ -62,7 +61,7 @@ class SignIn extends React.Component {
 							id="inputPassword"
 							type="text"
 							name="password"
-							onChange={this.onPasswordChange}
+							onChange={this.onInputChange("password")}
 						/>
 					</div>
 				</fieldset>
