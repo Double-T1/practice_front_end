@@ -36,7 +36,7 @@ class SignIn extends React.Component {
 				this.props.loadUser(user);
 				this.props.onRouteChange("progress");
 			} else {
-				this.props.showAlert(user);
+				this.props.showAlert(user,false);
 			}
 		})
 	}
@@ -47,7 +47,7 @@ class SignIn extends React.Component {
 				<fieldset>
 					<legend>Sign in</legend>	
 					<div id="email"> 
-						<label htmlFor="inputEmail">Email</label>
+						<label htmlFor="inputEmail">Email: </label>
 						<input 
 							id="inputEmail"
 							type="text"
@@ -56,7 +56,7 @@ class SignIn extends React.Component {
 						/>
 					</div>
 					<div id="password">
-						<label htmlFor="inputEmail">Password</label>
+						<label htmlFor="inputEmail">Password: </label>
 						<input 
 							id="inputPassword"
 							type="text"

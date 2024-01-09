@@ -36,10 +36,10 @@ class Register extends React.Component {
 		.then(res => res.json())
 		.then(user => {
 			if (user.id) {
-				this.props.loadUser(user);
-				this.props.onRouteChange("progress");
+				this.props.showAlert("Registered succesfully! You can now sign in to start your journey.",true);
+				this.props.onRouteChange("signin");
 			} else {
-				this.props.showAlert(user);
+				this.props.showAlert(user,false);
 			}
 		})
 	}
@@ -50,7 +50,7 @@ class Register extends React.Component {
 				<fieldset>
 					<legend>Register your account</legend>	
 					<div id="name">
-						<label htmlFor="inputName">Name</label>
+						<label htmlFor="inputName">Name: </label>
 						<input 
 							id="inputName"
 							type="text"
@@ -59,7 +59,7 @@ class Register extends React.Component {
 						/>
 					</div>
 					<div id="email"> 
-						<label htmlFor="inputEmail">Email</label>
+						<label htmlFor="inputEmail">Email: </label>
 						<input 
 							id="inputEmail"
 							type="text"
@@ -68,7 +68,7 @@ class Register extends React.Component {
 						/>
 					</div>
 					<div id="password">
-						<label htmlFor="inputEmail">Password</label>
+						<label htmlFor="inputEmail">Password: </label>
 						<input 
 							id="inputPassword"
 							type="text"

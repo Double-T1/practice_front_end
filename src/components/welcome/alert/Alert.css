@@ -4,3 +4,10 @@
   color: white;
   margin-bottom: 15px;
 }
+
+.success {
+	padding: 20px;
+	background-color: #04AA6D; /* Light Green */
+	color: white;
+	margin-bottom: 15px;
+}

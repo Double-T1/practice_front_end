@@ -10,35 +10,39 @@ class Welcome extends React.Component {
 		super(props);
 		this.state = {
 			isAlertVisible: false,
-			alertMessage: ""
+			message: "",
+			isSuccessful: false
 		}
 	}
 
-	showAlert = (message) => {
+	showAlert = (message, isSuccessful) => {
 		this.setState({
 			isAlertVisible: true,
-			alertMessage: message
+			message: message,
+			isSuccessful: isSuccessful
 		})
 
 		setTimeout(() => {
             this.setState({ 
             	isAlertVisible: false,
-            	alertMessage: ""
+            	message: "",
+            	isSuccessful: false
             })
         }, 3000);
 	} 
 
 	render() {
 		const {route, loadUser, onRouteChange} = this.props;
+		const {isAlertVisible, message, isSuccessful} = this.state;
 		if (route === "home") {
 			return ( <Home /> );
 		} else {
 			return  (
 				<div>
-					{ this.state.isAlertVisible && <Alert alertMessage={this.state.alertMessage}/> }
+					{ isAlertVisible && ( <Alert message={message} isSuccessful={isSuccessful}/> ) }
 					{ route === "signin" ? 
 						( <Signin loadUser={loadUser} onRouteChange={onRouteChange} showAlert={this.showAlert}/> ) :
-						( <Register loadUser={loadUser} onRouteChange={onRouteChange} showAlert={this.showAlert}/> )  
+						( <Register onRouteChange={onRouteChange} showAlert={this.showAlert}/> )  
 					}
 				</div>
 			)	
