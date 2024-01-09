@@ -32,7 +32,7 @@ class Welcome extends React.Component {
 	} 
 
 	render() {
-		const {route, loadUser, onRouteChange} = this.props;
+		const {route, loadUser, onRouteChange, setLoading} = this.props;
 		const {isAlertVisible, message, isSuccessful} = this.state;
 		if (route === "home") {
 			return ( <Home /> );
@@ -41,8 +41,8 @@ class Welcome extends React.Component {
 				<div>
 					{ isAlertVisible && ( <Alert message={message} isSuccessful={isSuccessful}/> ) }
 					{ route === "signin" ? 
-						( <Signin loadUser={loadUser} onRouteChange={onRouteChange} showAlert={this.showAlert}/> ) :
-						( <Register onRouteChange={onRouteChange} showAlert={this.showAlert}/> )  
+						( <Signin loadUser={loadUser} onRouteChange={onRouteChange} showAlert={this.showAlert} setLoading={setLoading}/> ) :
+						( <Register onRouteChange={onRouteChange} showAlert={this.showAlert} setLoading={setLoading}/> )  
 					}
 				</div>
 			)	

@@ -20,6 +20,7 @@ class SignIn extends React.Component {
 
 	//arrow function for the scope of 'this' keyword
 	onSubmitSignIn = () => {
+		this.props.setLoading(true);
 		fetch("https://input-hours-server.onrender.com/signin", {
 			method: "POST",
 			headers: {
@@ -32,6 +33,7 @@ class SignIn extends React.Component {
 		})
 		.then(res => res.json())
 		.then(user => {
+			this.props.setLoading(false);
 			if (user.id) {
 				this.props.loadUser(user);
 				this.props.onRouteChange("progress");
