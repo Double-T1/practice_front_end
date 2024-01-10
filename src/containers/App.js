@@ -17,25 +17,52 @@ class App extends Component {
         name: "",
         email: "",
         todayMins: 0,
-        // totalMins: 0,
-        // totalDays: 0,
-        // streaks: 0,
+        totalMins: 0,
+        totalDays: 0, 
+        lastInputDate: '',
+        streaks: 0,
         joined: '' //date  
       }
     };
   };
 
   loadUser = (currentUser) => {
+    //terrible patch here for the sake of convenience
+    const todayMins = currentUser.todayMins ? currentUser.todayMins : currentUser.todaymins;
+    const totalMins = currentUser.totalMins ? currentUser.totalMins : currentUser.totalmins;
+    const totalDays = currentUser.totalDays ? currentUser.totalDays : currentUser.totaldays;
+    const lastInputDate = currentUser.lastInputDate ? currentUser.lastInputDate : currentUser.lastinputdate;
     this.setState({
       user: {
         id: currentUser.id,
         name: currentUser.name,
         email: currentUser.email,
-        todayMins: currentUser.todayMins,
+        todayMins: todayMins,
+        totalMins: totalMins,
+        totalDays: totalDays,
+        lastInputDate: lastInputDate,
+        streaks: currentUser.streaks,
         joined: currentUser.joined
       }
     })
     localStorage.setItem("user",JSON.stringify(currentUser));
+  }
+
+  unloadUser = () => {
+    this.setState({
+      user: {
+        id: "",
+        name: "",
+        email: "",
+        todayMins: 0,
+        totalMins: 0,
+        totalDays: 0, 
+        lastInputDate: '',
+        streaks: 0,
+        joined: '' //date  
+      }
+    })
+    localStorage.setItem("user",null);
   }
 
   onRouteChange = (route) => {
@@ -61,28 +88,37 @@ class App extends Component {
     })
   }
 
-  onInputClick = (inputMins) => {
+  onSubmitInput = (inputMins) => {
     this.setLoading(true);
-    fetch("https://input-hours-server.onrender.com/input", {
+    fetch("https://input-hours-server.onrender.com/updateInput", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json" 
       },
       body: JSON.stringify({
         id: this.state.user.id,
-        inputMins: inputMins
+        inputMins: inputMins,
+        newInputDate: new Date()
       })
     })
     .then(res => res.json())
-    .then(todayMins => {
+    .then(res => {
       this.setLoading(false);
       this.setState(
-        Object.assign(this.state.user,{todayMins: todayMins})
+        Object.assign(this.state.user,{
+          todayMins: res.todaymins,
+          totalMins: res.totalmins,
+          totalDays: res.totaldays,
+          streaks: res.streaks  
+        })
       )
       const currentUser = JSON.parse(localStorage.getItem("user"));
       localStorage.setItem("user",JSON.stringify({
         ...currentUser,
-        todayMins: todayMins
+        todayMins: res.todaymins,
+        totalMins: res.totalmins,
+        totalDays: res.totaldays,
+        streaks: res.streaks
       }));
     })
     .catch(err => console.log("something went wrong"))
@@ -90,7 +126,7 @@ class App extends Component {
 
   render() {
     const { isSignedIn, route, user, isLoading } = this.state;
-    const { name, todayMins, email, id } = user;
+    const { name, todayMins, email, id, totalMins, totalDays, streaks } = user;
     return (
       <div className="App">
         {
@@ -101,13 +137,14 @@ class App extends Component {
             </div> 
           )
         }
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} unloadUser={this.unloadUser}/>
         { 
           isSignedIn ?
           ( <Content route={route} name={name} todayMins={todayMins} 
-            onInputClick={this.onInputClick} 
+            onSubmitInput={this.onSubmitInput} unloadUser={this.unloadUser}
             onRouteChange={this.onRouteChange} id={id} email={email}
-            loadUser={this.loadUser} setLoading={this.setLoading}/> 
+            loadUser={this.loadUser} setLoading={this.setLoading}
+            totalMins={totalMins} totalDays={totalDays} streaks={streaks}/> 
           ) : 
           ( <Welcome route={route} loadUser={this.loadUser} 
             onRouteChange={this.onRouteChange} setLoading={this.setLoading}/> )

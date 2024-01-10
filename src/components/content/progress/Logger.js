@@ -15,7 +15,7 @@ class Logger extends React.Component {
 	}
 
 	render() {
-		const { onInputClick } = this.props;
+		const { onSubmitInput } = this.props;
 		return (
 			<div className="">
 				<p className="f3">
@@ -23,7 +23,7 @@ class Logger extends React.Component {
 				</p>
 				<div>
 					<input type="number" placeholder="How many minutes?" onChange={this.onInputChange}/>
-					<button onClick={() => onInputClick(this.state.inputMins)}>Submit</button>
+					<button onClick={() => onSubmitInput(this.state.inputMins)}>Submit</button>
 				</div>
 			</div>
 		)

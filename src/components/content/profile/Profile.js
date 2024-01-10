@@ -27,6 +27,7 @@ class Profile extends React.Component {
 			this.props.setLoading(false);
 			this.props.onRouteChange("home");
 		})
+		this.props.unloadUser();
 	}
 
 	onChangeRoute = (route) => {
@@ -44,7 +45,7 @@ class Profile extends React.Component {
 		return (
 			<div>
 				<div> 
-					<h1>This page shows the setting and delete account options</h1>
+					<h1>This page shows options for account setting and deletion.</h1>
 				</div>
 				{	
 					noChange ? 
