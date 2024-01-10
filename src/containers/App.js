@@ -31,7 +31,7 @@ class App extends Component {
         id: currentUser.id,
         name: currentUser.name,
         email: currentUser.email,
-        todayMins: currentUser.minutes,
+        todayMins: currentUser.todayMins,
         joined: currentUser.joined
       }
     })
@@ -70,7 +70,7 @@ class App extends Component {
       },
       body: JSON.stringify({
         id: this.state.user.id,
-        minutes: inputMins
+        inputMins: inputMins
       })
     })
     .then(res => res.json())
@@ -79,6 +79,11 @@ class App extends Component {
       this.setState(
         Object.assign(this.state.user,{todayMins: todayMins})
       )
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      localStorage.setItem("user",JSON.stringify({
+        ...currentUser,
+        todayMins: todayMins
+      }));
     })
     .catch(err => console.log("something went wrong"))
   }
