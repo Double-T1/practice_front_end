@@ -2,9 +2,9 @@ import React from 'react';
 
 const Logger = ({onInputChange, onInputClick}) => {
 	return (
-		<div>
+		<div className="">
 			<p className="f3">
-				{`Record the amount of time here`}
+				{`Record your daily input here`}
 			</p>
 			<div>
 				<input type="number" placeholder="How many minutes?" onChange={onInputChange}/>
