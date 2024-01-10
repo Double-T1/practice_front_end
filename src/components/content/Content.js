@@ -14,7 +14,7 @@ class Content extends React.Component {
 		return (
 			route === "progress" ? 
 			( <Progress name={name} todayMins={todayMins} 
-				onInputChange={onInputChange} onInputClick={onInputClick}/> 
+				onInputClick={onInputClick}/> 
 			) :
 			( <Profile name={name} email={email}
 				onRouteChange={onRouteChange} id={id}
