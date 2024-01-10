@@ -1,14 +1,9 @@
-import React from 'react';
+import React from "react";
 
-const Accum = ({name, todayMins}) => {
+
+const Accum = () => {
 	return (
 		<div>
-			<div className="back f3" >
-				{`${name}, your currently logged time is....`}
-			</div>
-			<div className="black f1" >
-				{`${todayMins}`}
-			</div>
 		</div>
 	)
 }
