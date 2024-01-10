@@ -10,8 +10,8 @@ class App extends Component {
     super();
     this.state = {
       isSignedIn: false,
+      isLoading: false,
       route: "home", //home, signin, register, progress, profile
-      inputMins: 0,
       user: {
         id: "",
         name: "",
@@ -21,8 +21,7 @@ class App extends Component {
         // totalDays: 0,
         // streaks: 0,
         joined: '' //date  
-      },
-      isLoading: false
+      }
     };
   };
 
@@ -56,19 +55,13 @@ class App extends Component {
     }
   }
 
-  onInputChange = (event) => {
-    this.setState({
-      inputMins: event.target.value
-    })
-  }
-
   setLoading = (status) => {
     this.setState({
       isLoading: status
     })
   }
 
-  onInputClick = () => {
+  onInputClick = (inputMins) => {
     this.setLoading(true);
     fetch("https://input-hours-server.onrender.com/input", {
       method: "PUT",
@@ -77,14 +70,14 @@ class App extends Component {
       },
       body: JSON.stringify({
         id: this.state.user.id,
-        minutes: this.state.inputMins
+        minutes: inputMins
       })
     })
     .then(res => res.json())
-    .then(mins => {
+    .then(todayMins => {
       this.setLoading(false);
       this.setState(
-        Object.assign(this.state.user,{todayMins: mins})
+        Object.assign(this.state.user,{todayMins: todayMins})
       )
     })
     .catch(err => console.log("something went wrong"))
@@ -107,7 +100,7 @@ class App extends Component {
         { 
           isSignedIn ?
           ( <Content route={route} name={name} todayMins={todayMins} 
-            onInputChange={this.onInputChange} onInputClick={this.onInputClick} 
+            onInputClick={this.onInputClick} 
             onRouteChange={this.onRouteChange} id={id} email={email}
             loadUser={this.loadUser} setLoading={this.setLoading}/> 
           ) : 

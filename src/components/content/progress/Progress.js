@@ -10,7 +10,7 @@ const Progress = ({name, todayMins, onInputChange, onInputClick}) => {
 				name={name} 
 				todayMins={todayMins}
 			/>
-			<Logger onInputChange={onInputChange} onInputClick={onInputClick}/>
+			<Logger onInputClick={onInputClick}/>
 			<Accum />
         </div>  
 	)
