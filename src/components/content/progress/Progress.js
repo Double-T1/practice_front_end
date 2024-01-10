@@ -1,17 +1,17 @@
 import React from "react";
 import Today from "./Today";
 import Logger from "./Logger";
-import Accum from "./Accum";
+import Stats from "./Stats";
 
-const Progress = ({name, todayMins, onInputChange, onInputClick}) => {
+const Progress = ({name, todayMins, onSubmitInput, totalMins, totalDays, streaks}) => {
 	return (
 		<div>
 			<Today 
 				name={name} 
 				todayMins={todayMins}
 			/>
-			<Logger onInputClick={onInputClick}/>
-			<Accum />
+			<Logger onSubmitInput={onSubmitInput}/>
+			<Stats totalMins={totalMins} totalDays={totalDays} streaks={streaks}/>
         </div>  
 	)
 }
