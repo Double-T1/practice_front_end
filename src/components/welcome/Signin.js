@@ -1,6 +1,5 @@
 import React from 'react';
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { FaEyeSlash } from "react-icons/fa";
+import ShowPassword from "./showPassword/ShowPassword";
 
 class SignIn extends React.Component {
 	constructor(props) {
@@ -79,11 +78,7 @@ class SignIn extends React.Component {
 							name="password"
 							onChange={this.onInputChange("password")}
 						/>
-						{
-							this.state.showPassword ? 
-							( <FaEyeSlash className="ml1" onClick={this.setShowPassword}/> ) :
-							( <MdOutlineRemoveRedEye className="ml1" onClick={this.setShowPassword}/> ) 
-						}
+						<ShowPassword showPassword={this.state.showPassword} setShowPassword={this.setShowPassword}/>
 					</div>
 				</fieldset>
 				<div className="">

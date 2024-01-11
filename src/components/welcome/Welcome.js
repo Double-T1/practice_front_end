@@ -27,7 +27,7 @@ class Welcome extends React.Component {
             	message: "",
             	isSuccessful: false
             })
-        }, 3000);
+        }, 4000);
 	} 
 
 	render() {
