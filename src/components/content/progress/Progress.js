@@ -3,12 +3,13 @@ import Today from "./Today";
 import Logger from "./Logger";
 import Stats from "./Stats";
 
-const Progress = ({name, todayMins, onSubmitInput, totalMins, totalDays, streaks}) => {
+const Progress = ({name, todayMins, onSubmitInput, totalMins, totalDays, streaks, dailyGoal}) => {
 	return (
 		<div>
 			<Today 
 				name={name} 
 				todayMins={todayMins}
+				dailyGoal={dailyGoal}
 			/>
 			<Logger onSubmitInput={onSubmitInput}/>
 			<Stats totalMins={totalMins} totalDays={totalDays} streaks={streaks}/>

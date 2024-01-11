@@ -21,17 +21,19 @@ class App extends Component {
         totalDays: 0, 
         lastInputDate: '', //Date object
         streaks: 0,
-        joined: '' //Date object  
+        joined: '', //Date object 
+        dailyGoal: 0
       }
     };
   };
 
   checkStreak = (prevStreak, lastDate) => {
+    if (!lastDate) return prevStreak; 
     const newDate = new Date();
     if (newDate.getFullYear() === lastDate.getFullYear() && newDate.getMonth() === lastDate.getMont() && newDate.getDate() === lastDate.getDate()) {
       return prevStreak;
     } 
-    
+
     fetch("https://input-hours-server.onrender.com/updateStreaks", {
       method: "PUT",
       headers: {
@@ -64,7 +66,8 @@ class App extends Component {
         totalDays: totalDays,
         lastInputDate: lastInputDate,
         streaks: streaks,
-        joined: currentUser.joined
+        joined: currentUser.joined,
+        dailyGoal: 0
       }
     })
     localStorage.setItem("user",JSON.stringify(currentUser));
@@ -82,7 +85,8 @@ class App extends Component {
         totalDays: 0, 
         lastInputDate: '',
         streaks: 0,
-        joined: '' //date  
+        joined: '', //date  
+        dailyGoal: 0
       }
     })
     //the key is this one
@@ -150,7 +154,7 @@ class App extends Component {
 
   render() {
     const { isSignedIn, route, user, isLoading } = this.state;
-    const { name, todayMins, email, id, totalMins, totalDays, streaks } = user;
+    const { name, todayMins, email, id, totalMins, totalDays, streaks, dailyGoal } = user;
     return (
       <div className="App">
         {
@@ -168,7 +172,8 @@ class App extends Component {
             onSubmitInput={this.onSubmitInput} unloadUser={this.unloadUser}
             onRouteChange={this.onRouteChange} id={id} email={email}
             loadUser={this.loadUser} setLoading={this.setLoading}
-            totalMins={totalMins} totalDays={totalDays} streaks={streaks}/> 
+            totalMins={totalMins} totalDays={totalDays} streaks={streaks}
+            dailyGoal={dailyGoal}/> 
           ) : 
           ( <Welcome route={route} loadUser={this.loadUser} 
             onRouteChange={this.onRouteChange} setLoading={this.setLoading}/> )
