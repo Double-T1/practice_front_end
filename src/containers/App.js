@@ -3,6 +3,7 @@ import './App.css';
 import Navigation from '../components/navigation/Navigation';
 import Welcome from "../components/welcome/Welcome";
 import Content from "../components/content/Content";
+import PopUp from "../utility/popUp/PopUp";
 
 
 class App extends Component {
@@ -11,6 +12,7 @@ class App extends Component {
     this.state = {
       isSignedIn: false,
       isLoading: false,
+      showPopUp: false,
       route: "home", //home, signin, register, progress, profile
       user: {
         id: "",
@@ -152,18 +154,42 @@ class App extends Component {
     .catch(err => console.log("something went wrong"))
   }
 
+  setShowPopUp = () => {
+    const cur = this.state.showPopUp;
+    this.setState({
+      showPopUp: !cur
+    })
+  }
+
+  onChangeDailyGoal = (newDailyGoal) => {
+    this.setState(
+      Object.assign(this.state.user,{
+        dailyGoal: newDailyGoal
+      })
+    )
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    localStorage.setItem("user",JSON.stringify({
+      ...currentUser,
+      dailyGoal: newDailyGoal
+    }));
+  }
+
   render() {
-    const { isSignedIn, route, user, isLoading } = this.state;
+    const { isSignedIn, route, user, isLoading, showPopUp } = this.state;
     const { name, todayMins, email, id, totalMins, totalDays, streaks, dailyGoal } = user;
     return (
       <div className="App">
         {
           isLoading && 
-          ( 
-            <div className="loader-container">
-              <div className="spinner"></div>
-            </div> 
-          )
+          <div className="loader-container">
+            <div className="spinner"></div>
+          </div> 
+        }
+        {/*should we hide the optional render within each component itself?*/}
+        {
+          showPopUp && 
+          <PopUp setShowPopUp={this.setShowPopUp} dailyGoal={dailyGoal} id={id}
+          setLoading={this.setLoading} onChangeDailyGoal={this.onChangeDailyGoal}/>
         }
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} unloadUser={this.unloadUser}/>
         { 
@@ -173,7 +199,7 @@ class App extends Component {
             onRouteChange={this.onRouteChange} id={id} email={email}
             loadUser={this.loadUser} setLoading={this.setLoading}
             totalMins={totalMins} totalDays={totalDays} streaks={streaks}
-            dailyGoal={dailyGoal}/> 
+            dailyGoal={dailyGoal} setShowPopUp={this.setShowPopUp}/> 
           ) : 
           ( <Welcome route={route} loadUser={this.loadUser} 
             onRouteChange={this.onRouteChange} setLoading={this.setLoading}/> )
