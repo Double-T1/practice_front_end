@@ -19,12 +19,32 @@ class App extends Component {
         todayMins: 0,
         totalMins: 0,
         totalDays: 0, 
-        lastInputDate: '',
+        lastInputDate: '', //Date object
         streaks: 0,
-        joined: '' //date  
+        joined: '' //Date object  
       }
     };
   };
+
+  checkStreak = (prevStreak, lastDate) => {
+    const newDate = new Date();
+    if (newDate.getFullYear() === lastDate.getFullYear() && newDate.getMonth() === lastDate.getMont() && newDate.getDate() === lastDate.getDate()) {
+      return prevStreak;
+    } 
+    
+    fetch("https://input-hours-server.onrender.com/updateStreaks", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json" 
+      },
+      body: JSON.stringify({
+        id: this.state.user.id,
+        newStreak: 0
+      })
+    })
+    .catch(err => console.log("something went wrong while automatically resetting the streak."))
+    return 0;
+  }
 
   loadUser = (currentUser) => {
     //terrible patch here for the sake of convenience
@@ -32,6 +52,8 @@ class App extends Component {
     const totalMins = currentUser.totalMins ? currentUser.totalMins : currentUser.totalmins;
     const totalDays = currentUser.totalDays ? currentUser.totalDays : currentUser.totaldays;
     const lastInputDate = currentUser.lastInputDate ? currentUser.lastInputDate : currentUser.lastinputdate;
+
+    const streaks = this.checkStreak(currentUser.streaks, lastInputDate);
     this.setState({
       user: {
         id: currentUser.id,
@@ -41,7 +63,7 @@ class App extends Component {
         totalMins: totalMins,
         totalDays: totalDays,
         lastInputDate: lastInputDate,
-        streaks: currentUser.streaks,
+        streaks: streaks,
         joined: currentUser.joined
       }
     })
@@ -49,6 +71,7 @@ class App extends Component {
   }
 
   unloadUser = () => {
+    //kinda useless 
     this.setState({
       user: {
         id: "",
@@ -62,6 +85,7 @@ class App extends Component {
         joined: '' //date  
       }
     })
+    //the key is this one
     localStorage.setItem("user",null);
   }
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { FaEyeSlash } from "react-icons/fa";
+import ShowPassword from "./showPassword/ShowPassword";
 
 class Register extends React.Component {
 	constructor(props) {
@@ -90,13 +89,7 @@ class Register extends React.Component {
 							name="password"
 							onChange={this.onInputChange("password")}
 						/>
-						{/*terrible layout so far*/}
-						{
-							this.state.showPassword ? 
-							( <FaEyeSlash className="ml1" onClick={this.setShowPassword}/> ) :
-							( <MdOutlineRemoveRedEye className="ml1" onClick={this.setShowPassword}/> ) 
-						}
-						
+						<ShowPassword showPassword={this.state.showPassword} setShowPassword={this.setShowPassword}/>
 					</div>
 				</fieldset>
 				<div className="">
@@ -110,7 +103,6 @@ class Register extends React.Component {
 			</div>
 		)
 	}
-
 }
 
 
