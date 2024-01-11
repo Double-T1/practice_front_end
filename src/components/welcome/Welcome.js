@@ -4,7 +4,6 @@ import Signin from "./Signin";
 import Register from "./Register";
 import Alert from "./alert/Alert";
 
-
 class Welcome extends React.Component {
 	constructor(props) {
 		super(props);

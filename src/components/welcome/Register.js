@@ -1,4 +1,6 @@
 import React from 'react';
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { FaEyeSlash } from "react-icons/fa";
 
 class Register extends React.Component {
 	constructor(props) {
@@ -6,7 +8,8 @@ class Register extends React.Component {
 		this.state = {
 			name: "",
 			email: "",
-			password: ""
+			password: "",
+			showPassword: false
 		}
 	}
 
@@ -45,10 +48,21 @@ class Register extends React.Component {
 		})
 	}
 
+	onKeyPress = (event) => {
+		if (event.key === "Enter") {
+			this.onSubmitRegister();
+		}
+	}
+
+	setShowPassword = () => {
+		const current = this.state.showPassword;
+		this.setState({showPassword: !current});
+	} 
+
 	render() {
 		return (
 			<div>
-				<fieldset>
+				<fieldset onKeyDown={this.onKeyPress}>
 					<legend>Register your account</legend>	
 					<div id="name">
 						<label htmlFor="inputName">Name: </label>
@@ -72,10 +86,17 @@ class Register extends React.Component {
 						<label htmlFor="inputEmail">Password: </label>
 						<input 
 							id="inputPassword"
-							type="text"
+							type={this.state.showPassword ? "text" : "password"}
 							name="password"
 							onChange={this.onInputChange("password")}
 						/>
+						{/*terrible layout so far*/}
+						{
+							this.state.showPassword ? 
+							( <FaEyeSlash className="ml1" onClick={this.setShowPassword}/> ) :
+							( <MdOutlineRemoveRedEye className="ml1" onClick={this.setShowPassword}/> ) 
+						}
+						
 					</div>
 				</fieldset>
 				<div className="">
@@ -83,7 +104,7 @@ class Register extends React.Component {
 	                onClick={this.onSubmitRegister}
 	                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
 	                type="submit"
-	                value="Register"
+	                value="Enter"
 	              />
 	            </div>
 			</div>
