@@ -1,6 +1,6 @@
 import React from "react";
 import Home from "./Home";
-import Signin from "./Signin";
+import Login from "./Signin";
 import Register from "./Register";
 import Alert from "./alert/Alert";
 
@@ -40,7 +40,7 @@ class Welcome extends React.Component {
 				<div>
 					{ isAlertVisible && ( <Alert message={message} isSuccessful={isSuccessful}/> ) }
 					{ route === "signin" ? 
-						( <Signin loadUser={loadUser} onRouteChange={onRouteChange} showAlert={this.showAlert} setLoading={setLoading}/> ) :
+						( <Login loadUser={loadUser} onRouteChange={onRouteChange} showAlert={this.showAlert} setLoading={setLoading}/> ) :
 						( <Register onRouteChange={onRouteChange} showAlert={this.showAlert} setLoading={setLoading}/> )  
 					}
 				</div>

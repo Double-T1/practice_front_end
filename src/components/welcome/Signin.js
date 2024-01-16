@@ -1,7 +1,7 @@
 import React from 'react';
 import ShowPassword from "./showPassword/ShowPassword";
 
-class SignIn extends React.Component {
+class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -21,9 +21,9 @@ class SignIn extends React.Component {
 	}
 
 	//arrow function for the scope of 'this' keyword
-	onSubmitSignIn = () => {
+	onSubmitLogin = () => {
 		this.props.setLoading(true);
-		fetch("https://input-hours-server.onrender.com/signin", {
+		fetch("https://input-hours-server.onrender.com/login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -83,7 +83,7 @@ class SignIn extends React.Component {
 				</fieldset>
 				<div className="">
 	              <input
-	                onClick={this.onSubmitSignIn}
+	                onClick={this.onSubmitLogin}
 	                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
 	                type="submit"
 	                value="Enter"
@@ -95,4 +95,4 @@ class SignIn extends React.Component {
 }
 
 
-export default SignIn;
+export default Login;

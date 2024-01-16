@@ -31,7 +31,6 @@ class PopUp extends React.Component {
 			return res.json()
 		})
 		.then(dailyGoal => {
-			console.log("dailyGoal: ", dailyGoal);
 			this.props.onChangeDailyGoal(dailyGoal.dailygoal);
 			this.props.setLoading(false);
 			this.props.setShowPopUp();
