@@ -22,21 +22,23 @@ class Register extends React.Component {
 	}
 
 	//arrow function for clarity of this keyword
-	onSubmitRegister = () => {
-		this.props.setLoading(true);
-		fetch("https://input-hours-server.onrender.com/register", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				name: this.state.name,
-				email: this.state.email,
-				password: this.state.password
+	onSubmitRegister = async () => {
+		try {
+			this.props.setLoading(true);
+			const res = await fetch("https://input-hours-server.onrender.com/register", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({
+					name: this.state.name,
+					email: this.state.email,
+					password: this.state.password
+				})
 			})
-		})
-		.then(res => res.json())
-		.then(user => {
+
+			//why does res.json here needs await?? is it an api call as well?
+			const user = await res.json();
 			this.props.setLoading(false);
 			if (user.id) {
 				this.props.showAlert("Registered succesfully! You can now sign in to start your journey.",true);
@@ -44,7 +46,9 @@ class Register extends React.Component {
 			} else {
 				this.props.showAlert(user,false);
 			}
-		})
+		} catch (error) {
+
+		}
 	}
 
 	onKeyPress = (event) => {

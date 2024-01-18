@@ -176,7 +176,7 @@ class App extends Component {
 
   render() {
     const { isSignedIn, route, user, isLoading, showPopUp } = this.state;
-    const { name, todayMins, email, id, totalMins, totalDays, streaks, dailyGoal } = user;
+    const { name, todayMins, email, id, totalMins, totalDays, streaks, dailyGoal, token } = user;
     return (
       <div className="App">
         {
@@ -188,7 +188,7 @@ class App extends Component {
         {/*should we hide the optional render within each component itself?*/}
         {
           showPopUp && 
-          <PopUp setShowPopUp={this.setShowPopUp} dailyGoal={dailyGoal} id={id}
+          <PopUp setShowPopUp={this.setShowPopUp} dailyGoal={dailyGoal} token={token}
           setLoading={this.setLoading} onChangeDailyGoal={this.onChangeDailyGoal}/>
         }
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} unloadUser={this.unloadUser}/>

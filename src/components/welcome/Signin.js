@@ -1,7 +1,7 @@
 import React from 'react';
 import ShowPassword from "./showPassword/ShowPassword";
 
-class SignIn extends React.Component {
+class Login extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -21,33 +21,35 @@ class SignIn extends React.Component {
 	}
 
 	//arrow function for the scope of 'this' keyword
-	onSubmitSignIn = () => {
-		this.props.setLoading(true);
-		fetch("https://input-hours-server.onrender.com/signin", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email: this.state.email,
-				password: this.state.password
+	onSubmitLogin = async () => {
+		try {
+			this.props.setLoading(true);
+			const res = await fetch("https://input-hours-server.onrender.com/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email: this.state.email,
+					password: this.state.password
+				})
 			})
-		})
-		.then(res => res.json())
-		.then(user => {
+			const user = await res.json();
 			this.props.setLoading(false);
 			if (user.id) {
 				this.props.loadUser(user);
 				this.props.onRouteChange("progress");
 			} else {
-				this.props.showAlert(user,false);
+				throw user;
 			}
-		})
+		} catch (message) {
+			this.props.showAlert(message,false);
+		}
 	}
 
 	onKeyPress = (event) => {
 		if (event.key === "Enter") {
-			this.onSubmitSignIn();
+			this.onSubmitLogin();
 		}
 	}
 
@@ -83,7 +85,7 @@ class SignIn extends React.Component {
 				</fieldset>
 				<div className="">
 	              <input
-	                onClick={this.onSubmitSignIn}
+	                onClick={this.onSubmitLogin}
 	                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
 	                type="submit"
 	                value="Enter"
@@ -95,4 +97,4 @@ class SignIn extends React.Component {
 }
 
 
-export default SignIn;
+export default Login;
