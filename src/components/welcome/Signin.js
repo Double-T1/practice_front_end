@@ -21,33 +21,35 @@ class Login extends React.Component {
 	}
 
 	//arrow function for the scope of 'this' keyword
-	onSubmitLogin = () => {
-		this.props.setLoading(true);
-		fetch("https://input-hours-server.onrender.com/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email: this.state.email,
-				password: this.state.password
+	onSubmitLogin = async () => {
+		try {
+			this.props.setLoading(true);
+			const res = await fetch("https://input-hours-server.onrender.com/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email: this.state.email,
+					password: this.state.password
+				})
 			})
-		})
-		.then(res => res.json())
-		.then(user => {
+			const user = await res.json();
 			this.props.setLoading(false);
 			if (user.id) {
 				this.props.loadUser(user);
 				this.props.onRouteChange("progress");
 			} else {
-				this.props.showAlert(user,false);
+				throw user;
 			}
-		})
+		} catch (message) {
+			this.props.showAlert(message,false);
+		}
 	}
 
 	onKeyPress = (event) => {
 		if (event.key === "Enter") {
-			this.onSubmitSignIn();
+			this.onSubmitLogin();
 		}
 	}
 

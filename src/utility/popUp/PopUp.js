@@ -17,13 +17,14 @@ class PopUp extends React.Component {
 
 	onSubmitDailyGoal = () => {
 		this.props.setLoading(true);
+		const user = JSON.parse(localStorage.getItem("user"));
 		fetch("https://input-hours-server.onrender.com/updateDailyGoal", {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
+				"Authorization": `Bearer ${user.token}`
 			},
 			body: JSON.stringify({
-				id: this.props.id,
 				newDailyGoal: this.state.inputDailyGoal
 			})
 		})
