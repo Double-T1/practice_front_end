@@ -1,5 +1,7 @@
 import React from 'react';
 import ShowPassword from "./showPassword/ShowPassword";
+import validator from "email-validator";
+ 
 
 class Login extends React.Component {
 	constructor(props) {
@@ -23,6 +25,9 @@ class Login extends React.Component {
 	//arrow function for the scope of 'this' keyword
 	onSubmitLogin = async () => {
 		try {
+			if (!validator.validate(this.state.email))
+				throw "not a valid email format";
+
 			this.props.setLoading(true);
 			const res = await fetch("https://input-hours-server.onrender.com/login", {
 				method: "POST",
@@ -69,6 +74,7 @@ class Login extends React.Component {
 							id="inputEmail"
 							type="text"
 							name="email"
+							placeholder="example@example.com"
 							onChange={this.onInputChange("email")}
 						/>
 					</div>

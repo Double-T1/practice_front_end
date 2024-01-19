@@ -1,5 +1,6 @@
 import React from 'react';
 import ShowPassword from "./showPassword/ShowPassword";
+import validator from "email-validator";
 
 class Register extends React.Component {
 	constructor(props) {
@@ -24,6 +25,9 @@ class Register extends React.Component {
 	//arrow function for clarity of this keyword
 	onSubmitRegister = async () => {
 		try {
+			if (!validator.validate(this.state.email))
+				throw "not a valid email format";
+
 			this.props.setLoading(true);
 			const res = await fetch("https://input-hours-server.onrender.com/register", {
 				method: "POST",
@@ -44,10 +48,10 @@ class Register extends React.Component {
 				this.props.showAlert("Registered succesfully! You can now sign in to start your journey.",true);
 				this.props.onRouteChange("signin");
 			} else {
-				this.props.showAlert(user,false);
+				throw user;
 			}
 		} catch (error) {
-
+			this.props.showAlert(error,false);
 		}
 	}
 
@@ -82,6 +86,7 @@ class Register extends React.Component {
 							id="inputEmail"
 							type="text"
 							name="email"
+							placeholder="example@example.com"
 							onChange={this.onInputChange("email")}
 						/>
 					</div>
