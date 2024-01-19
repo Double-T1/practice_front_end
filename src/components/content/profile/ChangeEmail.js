@@ -1,4 +1,5 @@
 import React from "react";
+import validator from "email-validator";
 
 class ChangeEmail extends React.Component {
 	constructor(props) {
@@ -8,10 +9,6 @@ class ChangeEmail extends React.Component {
 			newEmail: ""
 		}
 	}
-
-	// onInputChange = (field, event) => {
-
-	// }
 
 	onCurrentEmailChange = (event) => {
 		this.setState({
@@ -25,29 +22,34 @@ class ChangeEmail extends React.Component {
 		})
 	}
 
-	onChangeEmailSubmit = () => {
-		this.props.setLoading(true);
-		fetch("https://input-hours-server.onrender.com/profile/update/changeEmail", {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				currentEmail: this.state.currentEmail,
-				newEmail: this.state.newEmail
+	onChangeEmailSubmit = async () => {
+		try {
+			if (!validator.validate(this.state.email))
+				throw "not a valid email format";
+
+			this.props.setLoading(true);
+			const res = await fetch("https://input-hours-server.onrender.com/profile/update/changeEmail", {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					currentEmail: this.state.currentEmail,
+					newEmail: this.state.newEmail
+				})
 			})
-		})
-		.then(res => {
-			return res.json();
-		})
-		.then(user => {
+
+			const user = await res.json();
 			this.props.setLoading(false);
 			if (user.id) {
 				this.props.loadUser(user);
 				this.props.onChangeRoute("default");
+			} else {
+				throw user;
 			}
-		})
-		.catch(error => console.log("shit happens hehe"));
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	render () {
