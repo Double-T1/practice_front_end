@@ -44,8 +44,8 @@ class Register extends React.Component {
 			//why does res.json here needs await?? is it an api call as well?
 			const user = await res.json();
 			this.props.setLoading(false);
-			if (user.id) {
-				this.props.showAlert("Registered succesfully! You can now sign in to start your journey.",true);
+			if (user.message) {
+				this.props.showAlert(user.message,true);
 				this.props.onRouteChange("signin");
 			} else {
 				throw user;
