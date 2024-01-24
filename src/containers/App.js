@@ -5,6 +5,7 @@ import Welcome from "../components/welcome/Welcome";
 import Content from "../components/content/Content";
 import PopUp from "../utility/popUp/PopUp";
 
+const backend_url = process.env.REACT_APP_BACKEND_URL;
 
 class App extends Component {
   constructor() {
@@ -36,7 +37,7 @@ class App extends Component {
       return prevStreak;
     } 
 
-    fetch("https://input-hours-server.onrender.com/updateStreaks", {
+    fetch(`${backend_url}/updateStreaks`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json" 
@@ -120,7 +121,7 @@ class App extends Component {
 
   onSubmitInput = (inputMins) => {
     this.setLoading(true);
-    fetch("https://input-hours-server.onrender.com/updateInput", {
+    fetch(`${backend_url}/updateInput`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json" 
